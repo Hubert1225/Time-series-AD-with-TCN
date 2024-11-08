@@ -49,3 +49,23 @@ class F1Score(EvaluationMetric):
             y_true=ground_truth_labels,
             y_pred=detected_labels,
         )
+
+
+class PrecisionAtK(EvaluationMetric):
+
+    name = "precision@k"
+
+    @staticmethod
+    def is_detection_relevant(
+        ground_truth_annotations: list[tuple[int, int]],
+        detected_anomaly: tuple[int, int],
+        series_len: int,
+    ) -> bool:
+        ground_truth_labels = get_labels_series(series_len, ground_truth_annotations)
+        detected_labels = get_labels_series(series_len, [detected_anomaly])
+        return np.sum(ground_truth_labels & detected_labels) > 0
+
+    def evaluate(self, ts: TimeSeriesWithAnoms, detected: list[tuple[int, int]]) -> float:
+        return float(np.mean(
+            list(map(lambda x: self.is_detection_relevant(ts.annotations, x, ts.values.shape[0]), detected))
+        ))
