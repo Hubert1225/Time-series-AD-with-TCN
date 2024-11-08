@@ -14,7 +14,9 @@ class EvaluationMetric(ABC):
     name: str
 
     @abstractmethod
-    def evaluate(self, ts: TimeSeriesWithAnoms, detected: list[tuple[int, int]]) -> float:
+    def evaluate(
+        self, ts: TimeSeriesWithAnoms, detected: list[tuple[int, int]]
+    ) -> float:
         """
         Args:
             ts: time series object for which anomaly detection has been performed
@@ -40,9 +42,11 @@ def get_labels_series(length: int, ones_periods: list[tuple[int, int]]) -> np.nd
 
 class F1Score(EvaluationMetric):
 
-    name = 'f1-score'
+    name = "f1-score"
 
-    def evaluate(self, ts: TimeSeriesWithAnoms, detected: list[tuple[int, int]]) -> float:
+    def evaluate(
+        self, ts: TimeSeriesWithAnoms, detected: list[tuple[int, int]]
+    ) -> float:
         ground_truth_labels = get_labels_series(ts.values.shape[0], ts.annotations)
         detected_labels = get_labels_series(ts.values.shape[0], detected)
         return f1_score(
@@ -65,7 +69,18 @@ class PrecisionAtK(EvaluationMetric):
         detected_labels = get_labels_series(series_len, [detected_anomaly])
         return np.sum(ground_truth_labels & detected_labels) > 0
 
-    def evaluate(self, ts: TimeSeriesWithAnoms, detected: list[tuple[int, int]]) -> float:
-        return float(np.mean(
-            list(map(lambda x: self.is_detection_relevant(ts.annotations, x, ts.values.shape[0]), detected))
-        ))
+    def evaluate(
+        self, ts: TimeSeriesWithAnoms, detected: list[tuple[int, int]]
+    ) -> float:
+        return float(
+            np.mean(
+                list(
+                    map(
+                        lambda x: self.is_detection_relevant(
+                            ts.annotations, x, ts.values.shape[0]
+                        ),
+                        detected,
+                    )
+                )
+            )
+        )
