@@ -1,0 +1,13 @@
+# building the newtork
+numpy
+scipy
+torch
+
+# my pytorch-tcn fork
+git+https://github.com/Hubert1225/pytorch-tcn@add-no-padding-option
+
+# notebook
+jupyterlab
+
+# code formatting
+black
