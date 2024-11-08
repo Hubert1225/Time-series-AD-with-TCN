@@ -1,5 +1,8 @@
-# building the newtork
+# data manipulation
 numpy
+pandas
+
+# building the newtork
 scipy
 torch
 
