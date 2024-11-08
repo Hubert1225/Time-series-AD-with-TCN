@@ -1,3 +1,8 @@
+"""This module provides tools for calculating
+anomaly detection metrics for evaluating detection
+results
+"""
+
 from abc import ABC, abstractmethod
 
 import numpy as np
@@ -41,6 +46,9 @@ def get_labels_series(length: int, ones_periods: list[tuple[int, int]]) -> np.nd
 
 
 class F1Score(EvaluationMetric):
+    """Calculates F1 score, for ground truth and detected
+    point-wise labels
+    """
 
     name = "f1-score"
 
@@ -56,6 +64,10 @@ class F1Score(EvaluationMetric):
 
 
 class PrecisionAtK(EvaluationMetric):
+    """Calculates precision@k for detected anomalies,
+    i.e. fraction of detected subsequences that are
+    relevant (correct)
+    """
 
     name = "precision@k"
 
