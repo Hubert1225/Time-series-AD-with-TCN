@@ -8,6 +8,10 @@ import re
 
 import numpy as np
 import pandas as pd
+import torch
+from torch.utils.data import Dataset
+
+from utils import nonoverlap_sliding_windows
 
 srw_regex = re.compile(
     r"^SinusRW_Length_(\d+)_AnomalyL_(\d+)_AnomalyN_(\d+)_NoisePerc_\d+$"
@@ -56,3 +60,16 @@ def get_srw_series(dir_path: str, series_name: str) -> TimeSeriesWithAnoms:
     values = pd.read_csv(series_path, header=None).values.reshape(-1)
 
     return TimeSeriesWithAnoms(values=values, annotations=anoms)
+
+
+class SlidingWindowDataset(Dataset):
+
+    def __init__(self, ts_values: np.ndarray, window_len: int):
+        self.windows = nonoverlap_sliding_windows(ts_values, window_len)
+
+    def __len__(self):
+        return self.windows.shape[0]
+
+    def __getitem__(self, idx):
+        window = self.windows[idx, :]
+        return torch.tensor(window, dtype=torch.float32).reshape((1, -1))
