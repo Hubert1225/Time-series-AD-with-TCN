@@ -49,7 +49,7 @@ def normalize_values(values: np.ndarray) -> np.ndarray:
     If all values are the same, then all values are set
     to 1.0
     """
-    values_min = np.amax(values)
+    values_min = np.amin(values)
     values_max = np.amax(values)
     return (
         np.ones_like(values)
