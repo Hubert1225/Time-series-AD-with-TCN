@@ -40,3 +40,19 @@ def nonoverlap_sliding_windows(ts: np.ndarray, window_len: int) -> np.ndarray:
         0, n_windows * window_len, window_len
     ).reshape((-1, 1))
     return ts[sliding_inds]
+
+
+def normalize_values(values: np.ndarray) -> np.ndarray:
+    """Normalizes all values in a given array
+    to the interval [0.0; 1.0]
+
+    If all values are the same, then all values are set
+    to 1.0
+    """
+    values_min = np.amax(values)
+    values_max = np.amax(values)
+    return (
+        np.ones_like(values)
+        if values_min == values_max
+        else (values - values_min) / (values_max - values_min)
+    )
