@@ -1,3 +1,7 @@
+"""This module contains definitions of neural networks classes
+used in the experiments
+"""
+
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -5,6 +9,18 @@ from pytorch_tcn import TCN
 
 
 class TemporalEncoder(nn.Module):
+    """Encoder class for time series subsequence anomaly
+    detection
+
+    Args:
+        n_inputs: number of channels of input
+        n_channels: number of channels for consecutive hidden layers
+        n_outputs: number of channels of output
+        kernel_size: kernel size of convolutions in TCN
+        dilation_base: number to determine dilation for each layer in TCN;
+            i-th layer will have dilation ``dilation_base**i``
+
+    """
 
     def __init__(
         self,
@@ -34,6 +50,24 @@ class TemporalEncoder(nn.Module):
 
 
 class TemporalDecoder(nn.Module):
+    """Decoder class for time series subsequence anomaly
+    detection
+
+    Args:
+        n_inputs: number of channels of input
+        n_channels: number of channels for consecutive hidden layers
+        n_outputs: number of channels of output
+        kernel_size: kernel size of convolutions in TCN
+        dilation_base: number to determine dilation for each layer in TCN;
+            (N-i)-th layer will have dilation ``dilation_base**i``,
+            N - number of hidden layers
+        output_size: desired size of the output (last dimension)
+
+    Notes:
+        `self.output_size` can be changed dynamically with
+        the `set_output_size` method
+
+    """
 
     def __init__(
         self,
@@ -66,6 +100,25 @@ class TemporalDecoder(nn.Module):
 
 
 class TCNAutoencoder(nn.Module):
+    """Autoencoder class for time series subsequence anomaly
+    detection
+
+    Args:
+        in_channels: number of channels of input
+        enc_channels: number of channels for consecutive hidden layers
+            in the encoder
+        hidden_dim: number of channels of the encoder's output
+            (latent representation)
+        dec_channels: number of channels for consecutive hidden layers
+            in the decoder
+        input_size: size of the input (last dimension)
+        dilation_base: number to determine dilation for each layer in TCN;
+            i-th layer in the encoder (and (N-i)th layer in the decoder)
+            will have dilation ``dilation_base**i``,
+            N - number of hidden layers in the decoder
+        kernel_size: kernel size of convolutions in TCN
+
+    """
 
     def __init__(
         self,
