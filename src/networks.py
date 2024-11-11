@@ -36,7 +36,7 @@ class TemporalEncoder(nn.Module):
             num_channels=n_channels,
             kernel_size=kernel_size,
             dilations=[dilation_base**i for i in range(len(n_channels))],
-            no_padding=True
+            no_padding=True,
         )
         self.conv1 = nn.Conv1d(
             kernel_size=1, in_channels=n_channels[-1], out_channels=n_outputs
@@ -83,7 +83,7 @@ class TemporalDecoder(nn.Module):
             num_inputs=n_inputs,
             num_channels=n_channels,
             kernel_size=kernel_size,
-            dilations=[dilation_base**i for i in range(len(n_channels)-1, -1, -1)],
+            dilations=[dilation_base**i for i in range(len(n_channels) - 1, -1, -1)],
         )
         self.output_size = output_size
         self.conv1 = nn.Conv1d(
@@ -144,7 +144,7 @@ class TCNAutoencoder(nn.Module):
             n_outputs=in_channels,
             output_size=input_size,
             kernel_size=kernel_size,
-            dilation_base=dilation_base
+            dilation_base=dilation_base,
         )
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
