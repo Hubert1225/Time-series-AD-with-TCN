@@ -73,10 +73,7 @@ def load_all_srw_series(
     """
     all_names = [os.path.splitext(fname)[0] for fname in os.listdir(dir_path)]
     series_names = [name for name in all_names if not name.endswith("Annotations")]
-    return [
-        get_srw_series(dir_path, series_name)
-        for series_name in series_names
-    ]
+    return [get_srw_series(dir_path, series_name) for series_name in series_names]
 
 
 class SlidingWindowDataset(Dataset):
