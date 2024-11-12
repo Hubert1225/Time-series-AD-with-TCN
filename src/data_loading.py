@@ -31,6 +31,7 @@ class TimeSeriesWithAnoms:
 
     """
 
+    name: str
     values: np.ndarray
     annotations: list[tuple[int, int]]
 
@@ -59,7 +60,7 @@ def get_srw_series(dir_path: str, series_name: str) -> TimeSeriesWithAnoms:
 
     values = pd.read_csv(series_path, header=None).values.reshape(-1)
 
-    return TimeSeriesWithAnoms(values=values, annotations=anoms)
+    return TimeSeriesWithAnoms(name=series_name, values=values, annotations=anoms)
 
 
 class SlidingWindowDataset(Dataset):
