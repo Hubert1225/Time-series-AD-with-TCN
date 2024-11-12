@@ -19,6 +19,11 @@ class TcnAeParams(BaseModel):
 
     n_epochs: PositiveInt
     lr: PositiveFloat
+    enc_channels: list[PositiveInt]
+    hidden_dim: PositiveInt
+    dec_channels: list[PositiveInt]
+    dilation_base: PositiveInt
+    kernel_size: PositiveInt
     batch_size: PositiveInt
     train_window_len: PositiveInt
     checkpoints_dir: DirectoryPath
