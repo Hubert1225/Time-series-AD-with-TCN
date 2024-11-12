@@ -11,6 +11,7 @@ import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader
 from tqdm import tqdm
+import mlflow
 
 from utils import normalize_values
 from data_loading import load_all_srw_series, TimeSeriesWithAnoms, SlidingWindowDataset
@@ -66,20 +67,26 @@ def train_model_for_series(series: TimeSeriesWithAnoms) -> None:
     optimizer = torch.optim.Adam(model.parameters(), lr=tcn_ae_params.lr)
 
     # learning process
-    best_loss = float("inf")
-    epochs = list(range(tcn_ae_params.n_epochs))
-    for n_epoch in tqdm(epochs, desc=series.name):
-        model.decoder.set_output_size(tcn_ae_params.train_window_len)
-        for train_windows_batch in dataloader:
-            training_step(model, train_windows_batch, loss_fun, optimizer)
-        model.decoder.set_output_size(series.values.shape[-1])
-        cur_loss = eval_model(model, series.values, loss_fun)
-        if cur_loss < best_loss:
-            best_loss = cur_loss
-            torch.save(model.state_dict(), model_path)
+    with mlflow.start_run(run_name=series.name) as run:
+        best_loss = float("inf")
+        epochs = list(range(tcn_ae_params.n_epochs))
+        mlflow.log_params(tcn_ae_params.dict())
+        for n_epoch in tqdm(epochs, desc=series.name):
+            model.decoder.set_output_size(tcn_ae_params.train_window_len)
+            for train_windows_batch in dataloader:
+                training_step(model, train_windows_batch, loss_fun, optimizer)
+            model.decoder.set_output_size(series.values.shape[-1])
+            cur_loss = eval_model(model, series.values, loss_fun)
+            mlflow.log_metric("train_loss", cur_loss, step=n_epoch)
+            if cur_loss < best_loss:
+                best_loss = cur_loss
+                torch.save(model.state_dict(), model_path)
+        mlflow.log_artifact(model_path)
 
 
 if __name__ == "__main__":
+    mlflow.set_tracking_uri("http://localhost:5000")
+    mlflow.set_experiment("TCN_AE_anomaly_detection")
     all_series = prepare_data()
     for series in all_series:
         train_model_for_series(series)
