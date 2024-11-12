@@ -25,6 +25,7 @@ class TimeSeriesWithAnoms:
     annotations
 
     Args:
+        name: string used as a series identifier
         values: 1D array with time series values
         annotations: list of tuples, where each tuple: (start_index, last_index + 1)
             represents one subsequence anomaly
