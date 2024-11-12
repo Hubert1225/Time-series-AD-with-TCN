@@ -1,3 +1,12 @@
+"""This module provides parsed model parameters
+
+Examples:
+    >>> from params import tcn_ae_params
+    >>> tcn_ae_params.n_epochs
+
+"""
+
+
 import yaml
 from pydantic import BaseModel, PositiveInt, DirectoryPath, PositiveFloat
 
@@ -5,6 +14,9 @@ PARAMS_PATH = "params.yaml"
 
 
 class TcnAeParams(BaseModel):
+    """Template for object storing parameters for
+    TCN Autoencoder in experiments
+    """
     n_epochs: PositiveInt
     lr: PositiveFloat
     batch_size: PositiveInt
