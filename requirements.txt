@@ -16,6 +16,9 @@ scikit-learn
 PyYAML
 pydantic
 
+# learning monitoring
+mlflow
+
 # notebook
 jupyterlab
 
