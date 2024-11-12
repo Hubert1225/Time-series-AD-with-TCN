@@ -5,6 +5,7 @@ access to the benchmark dataset
 from dataclasses import dataclass
 import os
 import re
+from typing import Callable
 
 import numpy as np
 import pandas as pd
@@ -62,6 +63,20 @@ def get_srw_series(dir_path: str, series_name: str) -> TimeSeriesWithAnoms:
     values = pd.read_csv(series_path, header=None).values.reshape(-1)
 
     return TimeSeriesWithAnoms(name=series_name, values=values, annotations=anoms)
+
+
+def load_all_srw_series(
+    dir_path: str = "data/srw",
+) -> list[TimeSeriesWithAnoms]:
+    """Loads all series from SinusRandomWalk dataset saved
+    in a given directory
+    """
+    all_names = [os.path.splitext(fname)[0] for fname in os.listdir(dir_path)]
+    series_names = [name for name in all_names if not name.endswith("Annotations")]
+    return [
+        get_srw_series(dir_path, series_name)
+        for series_name in series_names
+    ]
 
 
 class SlidingWindowDataset(Dataset):
