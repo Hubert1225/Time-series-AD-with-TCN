@@ -12,6 +12,10 @@ git+https://github.com/Hubert1225/pytorch-tcn@add-no-padding-option
 # baseline models, evaluation metric
 scikit-learn
 
+# parsing parameters
+PyYAML
+pydantic
+
 # notebook
 jupyterlab
 
