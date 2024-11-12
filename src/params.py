@@ -6,7 +6,6 @@ Examples:
 
 """
 
-
 import yaml
 from pydantic import BaseModel, PositiveInt, DirectoryPath, PositiveFloat
 
@@ -17,6 +16,7 @@ class TcnAeParams(BaseModel):
     """Template for object storing parameters for
     TCN Autoencoder in experiments
     """
+
     n_epochs: PositiveInt
     lr: PositiveFloat
     batch_size: PositiveInt
