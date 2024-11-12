@@ -1,0 +1,7 @@
+params:
+  tcn_ae:
+    n_epochs: 50
+    lr: 0.04
+    batch_size: 16
+    train_window_len: 2048
+    checkpoints_dir: "checkpoints/"
