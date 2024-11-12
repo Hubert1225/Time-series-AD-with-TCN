@@ -19,5 +19,8 @@ pydantic
 # notebook
 jupyterlab
 
+# progress bar
+tqdm
+
 # code formatting
 black
