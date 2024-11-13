@@ -56,3 +56,7 @@ def normalize_values(values: np.ndarray) -> np.ndarray:
         if values_min == values_max
         else (values - values_min) / (values_max - values_min)
     )
+
+
+class SkipIteration(Exception):
+    pass
