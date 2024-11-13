@@ -1,7 +1,10 @@
-"""Run this script with PYTHONPATH set to the src/ directory
-or set the src/ directory as a source directory before running
+"""This script loads a TCN autoencoder for each time series.
+The training process is tracked with MLFlow
 
 Hyperparameters can be set in the params.yaml file
+
+Run this script with PYTHONPATH set to the src/ directory
+or set the src/ directory as a source directory before running
 
 """
 
