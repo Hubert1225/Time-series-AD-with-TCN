@@ -41,7 +41,7 @@ def train_model_for_series(series: TimeSeriesWithAnoms) -> None:
     In the training process, the model is evaluated after each epoch,
     and the model with the lowest loss is saved.
     The model is saved as a torch state dict to the file:
-    <chackpoints_dir>/tcnae_<series_name>.pth
+    <checkpoints_dir>/tcnae_<series_name>.pth
 
     """
 
