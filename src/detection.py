@@ -4,6 +4,8 @@ on a time series using a train autoencoder
 import numpy as np
 from scipy.spatial.distance import mahalanobis
 
+from utils import SkipIteration
+
 
 def mahalanobis_anomaly_score(X: np.ndarray) -> np.ndarray:
     """Anomaly scores for samples based on their
@@ -31,10 +33,6 @@ def mahalanobis_anomaly_score(X: np.ndarray) -> np.ndarray:
             except np.linalg.LinAlgError:
                 i += 1
     return np.array([mahalanobis(x, mu, cov_inv) for x in X])
-
-
-class SkipIteration(Exception):
-    pass
 
 
 def get_k_max_nonoverlapping(
