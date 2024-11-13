@@ -6,7 +6,7 @@ import numpy as np
 from scipy.spatial.distance import mahalanobis
 import torch
 
-from utils import SkipIteration, sliding_window
+from utils import SkipIteration
 from networks import TCNAutoencoder
 
 
@@ -111,30 +111,3 @@ def get_reconstruction_errors(
 
     values_recon = model(values_tensor)
     return (values_recon - values_tensor).squeeze().detach().numpy()
-
-
-def detect_subsequence_anomalies(
-    values: np.ndarray,
-    model: TCNAutoencoder,
-    anom_len: int,
-    k_anoms: int,
-) -> list[tuple[int, int]]:
-    """Detects subsequence anomalies in time series values
-    using a trained TCN Autoencoder
-
-    Args:
-        values: input time series - array of shape (input_size,)
-        model: trained TCN autoencoder
-        anom_len: anomaly length
-        k_anoms: number of anomalies to detect
-
-    Returns:
-        list of tuples, each element is (start_index, end_index + 1) for an anomaly
-
-    """
-    recon_errors = get_reconstruction_errors(values, model)
-    errors_sliding_windows = sliding_window(recon_errors, anom_len)
-    windows_anomaly_score = mahalanobis_anomaly_score(errors_sliding_windows)
-    inds_sorted = np.flip(np.argsort(windows_anomaly_score)).tolist()
-    anom_inds = get_k_max_nonoverlapping(inds_sorted, anom_len, k_anoms)
-    return [(start_ind, start_ind + anom_len) for start_ind in anom_inds]
