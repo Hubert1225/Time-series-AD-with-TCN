@@ -1,6 +1,7 @@
 """This module provides functions to perform anomaly detection
 on a time series using a train autoencoder
 """
+
 import numpy as np
 from scipy.spatial.distance import mahalanobis
 import torch
@@ -135,7 +136,5 @@ def detect_subsequence_anomalies(
     errors_sliding_windows = sliding_window(recon_errors, anom_len)
     windows_anomaly_score = mahalanobis_anomaly_score(errors_sliding_windows)
     inds_sorted = np.flip(np.argsort(windows_anomaly_score)).tolist()
-    anom_inds = get_k_max_nonoverlapping(
-        inds_sorted, anom_len, k_anoms
-    )
+    anom_inds = get_k_max_nonoverlapping(inds_sorted, anom_len, k_anoms)
     return [(start_ind, start_ind + anom_len) for start_ind in anom_inds]
