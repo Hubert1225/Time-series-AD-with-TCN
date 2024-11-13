@@ -1,4 +1,4 @@
-"""This script loads a TCN autoencoder for each time series.
+"""This script trains a TCN autoencoder for each time series.
 The training process is tracked with MLFlow
 
 Hyperparameters can be set in the params.yaml file
