@@ -5,7 +5,6 @@ access to the benchmark dataset
 from dataclasses import dataclass
 import os
 import re
-from typing import Callable
 
 import numpy as np
 import pandas as pd
