@@ -42,6 +42,7 @@ class SubsequenceAnomalyDetector(ABC):
             list of tuples, each element is (start_index, end_index + 1) for an anomaly
 
         """
+        pass
 
 
 class TcnAeDetector(SubsequenceAnomalyDetector):
