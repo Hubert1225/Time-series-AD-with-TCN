@@ -25,12 +25,14 @@ class TimeSeriesWithAnoms:
     annotations
 
     Args:
+        name: string used as a series identifier
         values: 1D array with time series values
         annotations: list of tuples, where each tuple: (start_index, last_index + 1)
             represents one subsequence anomaly
 
     """
 
+    name: str
     values: np.ndarray
     annotations: list[tuple[int, int]]
 
@@ -59,7 +61,18 @@ def get_srw_series(dir_path: str, series_name: str) -> TimeSeriesWithAnoms:
 
     values = pd.read_csv(series_path, header=None).values.reshape(-1)
 
-    return TimeSeriesWithAnoms(values=values, annotations=anoms)
+    return TimeSeriesWithAnoms(name=series_name, values=values, annotations=anoms)
+
+
+def load_all_srw_series(
+    dir_path: str = "data/srw",
+) -> list[TimeSeriesWithAnoms]:
+    """Loads all series from SinusRandomWalk dataset saved
+    in a given directory
+    """
+    all_names = [os.path.splitext(fname)[0] for fname in os.listdir(dir_path)]
+    series_names = [name for name in all_names if not name.endswith("Annotations")]
+    return [get_srw_series(dir_path, series_name) for series_name in series_names]
 
 
 class SlidingWindowDataset(Dataset):
