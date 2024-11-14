@@ -118,6 +118,7 @@ class TcnAeDetector(SubsequenceAnomalyDetector):
 
 ##########################    BASELINE MODELS    ################################
 
+
 class RandomDetector(SubsequenceAnomalyDetector):
     """Baseline subsequence anomaly detector.
     Detects random non-overlapping subsequences
