@@ -152,6 +152,7 @@ class LofDetector(SubsequenceAnomalyDetector):
         n_neighbors: int = 50,
         other_lof_params: dict[str, Any] | None = None,
     ):
+        other_lof_params = {} if other_lof_params is None else other_lof_params
         self.lof = LocalOutlierFactor(
             n_neighbors=n_neighbors,
             **other_lof_params,
