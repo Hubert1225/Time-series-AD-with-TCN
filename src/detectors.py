@@ -34,7 +34,7 @@ class SubsequenceAnomalyDetector(ABC):
         values: np.ndarray,
         anom_len: int,
         k_anoms: int,
-    ) -> list[int, int]:
+    ) -> list[tuple[int, int]]:
         """Detects subsequence anomalies in a time series
         values
 
