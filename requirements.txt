@@ -24,6 +24,7 @@ jupyterlab
 
 # progress bar
 tqdm
+ipywidgets
 
 # code formatting
 black
