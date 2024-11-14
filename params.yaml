@@ -13,3 +13,4 @@ params:
   baseline:
     lof_n_neighbors: 50
     lof_other_params:
+      n_jobs: -1
