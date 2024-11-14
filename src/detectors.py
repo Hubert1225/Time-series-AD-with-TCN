@@ -6,9 +6,11 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 import os
+from typing import Any
 
 import numpy as np
 import torch
+from sklearn.neighbors import LocalOutlierFactor
 
 from data_loading import TimeSeriesWithAnoms
 from utils import sliding_window
@@ -131,4 +133,37 @@ class RandomDetector(SubsequenceAnomalyDetector):
     ) -> list[tuple[int, int]]:
         random_inds = np.random.permutation(values.shape[-1] - anom_len)
         anom_inds = get_k_max_nonoverlapping(random_inds, anom_len, k_anoms)
+        return [(start_ind, start_ind + anom_len) for start_ind in anom_inds]
+
+
+class LofDetector(SubsequenceAnomalyDetector):
+    """Subsequence anomaly detector based on the Local Outlier Factor
+    algorithm (LOF)
+
+    During detection, all windows of length ``anom_len`` are extracted
+    from the series. Then, each window is treated as a ``anom_len``-dimensional
+    sample. All windows are passed to the LOF algorithm
+
+    """
+
+    def __init__(
+        self,
+        n_neighbors: int = 50,
+        other_lof_params: dict[str, Any] | None = None,
+    ):
+        self.lof = LocalOutlierFactor(
+            n_neighbors=n_neighbors,
+            **other_lof_params,
+        )
+
+    def detect(
+        self,
+        values: np.ndarray,
+        anom_len: int,
+        k_anoms: int,
+    ) -> list[tuple[int, int]]:
+        series_windows = sliding_window(values, anom_len)
+        self.lof.fit_predict(series_windows)
+        inds_sorted = np.argsort(self.lof.negative_outlier_factor_).tolist()
+        anom_inds = get_k_max_nonoverlapping(inds_sorted, anom_len, k_anoms)
         return [(start_ind, start_ind + anom_len) for start_ind in anom_inds]
