@@ -10,3 +10,6 @@ params:
     batch_size: 16
     train_window_len: 2048
     checkpoints_dir: "checkpoints/"
+  baseline:
+    lof_n_neighbors: 50
+    lof_other_params:

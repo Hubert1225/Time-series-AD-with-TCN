@@ -6,6 +6,8 @@ Examples:
 
 """
 
+from typing import Any
+
 import yaml
 from pydantic import BaseModel, PositiveInt, DirectoryPath, PositiveFloat
 
@@ -29,8 +31,17 @@ class TcnAeParams(BaseModel):
     checkpoints_dir: DirectoryPath
 
 
+class BaselineParams(BaseModel):
+    """Template for object storing parameters for
+    baseline models in experiments
+    """
+    lof_n_neighbors: PositiveInt
+    lof_other_params: dict[str, Any] | None = None
+
+
 with open(PARAMS_PATH) as f:
     params_all = yaml.safe_load(f)
 
 
 tcn_ae_params = TcnAeParams(**params_all["params"]["tcn_ae"])
+baseline_params = BaselineParams(**params_all["params"]["baseline"])
