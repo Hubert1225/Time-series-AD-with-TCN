@@ -2,10 +2,15 @@
 detectors
 """
 
+from __future__ import annotations
+
 from abc import ABC, abstractmethod
+import os
 
 import numpy as np
+import torch
 
+from data_loading import TimeSeriesWithAnoms
 from utils import sliding_window
 from networks import TCNAutoencoder
 from detection import (
@@ -13,6 +18,7 @@ from detection import (
     get_reconstruction_errors,
     get_k_max_nonoverlapping,
 )
+from params import TcnAeParams
 
 
 class SubsequenceAnomalyDetector(ABC):
@@ -58,6 +64,41 @@ class TcnAeDetector(SubsequenceAnomalyDetector):
 
     def __init__(self, model: TCNAutoencoder):
         self._model = model
+
+    @staticmethod
+    def load(
+        series: TimeSeriesWithAnoms,
+        params: TcnAeParams,
+    ) -> TcnAeDetector:
+        """Loads trained TCN autoencoder on a series
+        and creates a detector for this series
+
+        Args:
+            series: series for which the model to load
+            params: ``TcnAeParams`` object containing parameters values used
+                to create TCN autoencoder object
+
+        Returns:
+            ``TcnAeDetector`` object
+
+        """
+        model = TCNAutoencoder(
+            in_channels=(1 if series.values.ndim == 1 else series.values.shape[-2]),
+            enc_channels=params.enc_channels,
+            hidden_dim=params.hidden_dim,
+            dec_channels=params.dec_channels,
+            input_size=series.values.shape[-1],
+            dilation_base=params.dilation_base,
+            kernel_size=params.kernel_size,
+        )
+        model.load_state_dict(
+            torch.load(
+                os.path.join(params.checkpoints_dir, series.name + ".pth"),
+                weights_only=True,
+            )
+        )
+        model.eval()
+        return TcnAeDetector(model)
 
     def detect(
         self,
