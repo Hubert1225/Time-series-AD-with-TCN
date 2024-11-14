@@ -112,3 +112,23 @@ class TcnAeDetector(SubsequenceAnomalyDetector):
         inds_sorted = np.flip(np.argsort(windows_anomaly_score)).tolist()
         anom_inds = get_k_max_nonoverlapping(inds_sorted, anom_len, k_anoms)
         return [(start_ind, start_ind + anom_len) for start_ind in anom_inds]
+
+
+##########################    BASELINE MODELS    ################################
+
+class RandomDetector(SubsequenceAnomalyDetector):
+    """Baseline subsequence anomaly detector.
+    Detects random non-overlapping subsequences
+    """
+
+    name = "random"
+
+    def detect(
+        self,
+        values: np.ndarray,
+        anom_len: int,
+        k_anoms: int,
+    ) -> list[tuple[int, int]]:
+        random_inds = np.random.permutation(values.shape[-1] - anom_len)
+        anom_inds = get_k_max_nonoverlapping(random_inds, anom_len, k_anoms)
+        return [(start_ind, start_ind + anom_len) for start_ind in anom_inds]
