@@ -9,6 +9,7 @@ import numpy as np
 from sklearn.metrics import f1_score
 
 from data_loading import TimeSeriesWithAnoms
+from detectors import SubsequenceAnomalyDetector
 
 
 class EvaluationMetric(ABC):
@@ -96,3 +97,33 @@ class PrecisionAtK(EvaluationMetric):
                 )
             )
         )
+
+
+def evaluate_model(
+    series: TimeSeriesWithAnoms,
+    detector: SubsequenceAnomalyDetector,
+    metrics: list[EvaluationMetric],
+) -> dict[str, float]:
+    """Given a subsequence anomaly detector and a time series,
+    evaluates the detector on the time series and calculates
+    evaluation metrics
+
+    Args:
+        series: ``TimeSeriesWithAnoms`` instance
+        detector: ``SubsequenceAnomalyDetector`` object to be evaluated
+        metrics: list of evaluation metrics (instances of ``EvaluationMetric`` subclasses)
+
+    Returns:
+        dict with evaluation metrics values calculated
+        {metric_name -> metric_value}
+
+    """
+    anom_len = series.annotations[0][1] - series.annotations[0][0]
+    k_anoms = len(series.annotations)
+    detected_anoms = detector.detect(
+        values=series.values, anom_len=anom_len, k_anoms=k_anoms
+    )
+    return {
+        metric.name: metric.evaluate(ts=series, detected=detected_anoms)
+        for metric in metrics
+    }
