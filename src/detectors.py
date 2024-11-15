@@ -142,7 +142,7 @@ class LofDetector(SubsequenceAnomalyDetector):
     algorithm (LOF)
 
     During detection, all windows of length ``anom_len`` are extracted
-    from the series. Then, each window is treated as a ``anom_len``-dimensional
+    from the series. Then, each window is treated as an ``anom_len``-dimensional
     sample. All windows are passed to the LOF algorithm
 
     """
