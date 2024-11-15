@@ -19,6 +19,7 @@ class TcnAeParams(BaseModel):
     TCN Autoencoder in experiments
     """
 
+    random_seed: int
     n_epochs: PositiveInt
     lr: PositiveFloat
     enc_channels: list[PositiveInt]
@@ -35,6 +36,8 @@ class BaselineParams(BaseModel):
     """Template for object storing parameters for
     baseline models in experiments
     """
+
+    random_seed: int
     lof_n_neighbors: PositiveInt
     lof_other_params: dict[str, Any] | None = None
 

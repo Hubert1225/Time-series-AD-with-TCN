@@ -1,5 +1,6 @@
 params:
   tcn_ae:
+    random_seed: 0
     n_epochs: 50
     lr: 0.04
     enc_channels: [2, 4]
@@ -11,6 +12,7 @@ params:
     train_window_len: 2048
     checkpoints_dir: "checkpoints/"
   baseline:
+    random_seed: 0
     lof_n_neighbors: 50
     lof_other_params:
       n_jobs: -1
