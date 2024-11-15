@@ -161,7 +161,14 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
+# datasets
 data/*
 !data/.gitkeep
+
+# saved models
 checkpoints/*
 !/checkpoints/.gitkeep
+
+# mlflow
+my.db
+mlartifacts
