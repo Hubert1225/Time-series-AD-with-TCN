@@ -105,7 +105,7 @@ def evaluate_model(
     metrics: list[EvaluationMetric],
 ) -> dict[str, float]:
     """Given a subsequence anomaly detector and a time series,
-    evaluates the detector on time series and calculates
+    evaluates the detector on the time series and calculates
     evaluation metrics
 
     Args:
