@@ -90,6 +90,7 @@ def train_model_for_series(series: TimeSeriesWithAnoms) -> None:
 if __name__ == "__main__":
     mlflow.set_tracking_uri("http://localhost:5000")
     mlflow.set_experiment("TCN_AE_anomaly_detection")
+    torch.manual_seed(tcn_ae_params.random_seed)
     all_series = prepare_data()
     for series in all_series:
         train_model_for_series(series)
