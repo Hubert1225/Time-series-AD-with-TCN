@@ -114,7 +114,7 @@ def evaluate_model(
         metrics: list of evaluation metrics (instances of ``EvaluationMetric`` subclasses)
 
     Returns:
-        dict with valuation metrics values calculated
+        dict with evaluation metrics values calculated
         {metric_name -> metric_value}
 
     """
