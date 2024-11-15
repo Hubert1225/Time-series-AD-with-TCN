@@ -126,13 +126,16 @@ class RandomDetector(SubsequenceAnomalyDetector):
 
     name = "random"
 
+    def __init__(self, random_seed: int):
+        self.generator = np.random.default_rng(random_seed)
+
     def detect(
         self,
         values: np.ndarray,
         anom_len: int,
         k_anoms: int,
     ) -> list[tuple[int, int]]:
-        random_inds = np.random.permutation(values.shape[-1] - anom_len)
+        random_inds = self.generator.permutation(values.shape[-1] - anom_len)
         anom_inds = get_k_max_nonoverlapping(random_inds, anom_len, k_anoms)
         return [(start_ind, start_ind + anom_len) for start_ind in anom_inds]
 
