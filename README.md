@@ -65,3 +65,89 @@ Reference:
 P. Boniol, M. Linardi, F. Roncallo, T. Palpanas, M. Meftah, E. Remy,
 Unsupervised and Scalable Subsequence Anomaly Detection in Large Data Series,
 VLDBJ (2021)
+
+## How to run
+
+First, you need to download data. Then, you need to train autoencoders
+for time series. The training process is tracked with MLFlow.
+Finally, you can run the evaluation and check results.
+
+#### Prepare the environment
+
+1. Navigate to the root of this repository
+2. Create and turn on the Python virtual environment, if you like
+3. Install the necessary dependencies:
+
+```commandline
+pip install -r requirements.txt
+```
+
+#### Download data
+
+- **automatically** (needs a shell interpreting Linux commands)
+
+Run the `download_srw.sh` script:
+
+```bash
+chmod +x data/download_srw.sh
+./data/download_srw.sh
+```
+
+OR run manually the following commands:
+
+```bash
+mkdir data/srw
+mkdir temp
+
+wget https://helios2.mi.parisdescartes.fr/~themisp/norma/data/Synthetic_datasets.zip
+unzip Synthetic_datasets.zip -d temp/
+mv temp/Synthetic_Sin+anom/noNoise_varLenghtAnomalies/* data/srw/
+mv temp/Synthetic_Sin+anom/noNoise_varNumberAnomalies/* data/srw/
+mv temp/Synthetic_Sin+anom/varNoise_fixedNumberAnomaliesfixedLength/* data/srw/
+
+rm -r temp/
+rm Synthetic_datasets.zip
+```
+
+- **manually**:
+
+Go to the site: https://helios2.mi.parisdescartes.fr/~themisp/norma/ .
+Go to the `Synthetic Datasets` section, download the zip file. Create the `srw`
+subdirectory in the `data` directory. Unpack the downloaded zip. Place
+all .ts and annotations files in the `data/srw`.
+
+#### Train autoencoders
+
+Run the MLFlow server:
+
+```commandline
+mlflow server --backend-store-uri sqlite:///my.db
+```
+
+Then, you can run the training script:
+
+```bash
+PYTHONPATH=$(pwd)/src python3 train_models.py
+```
+
+(you can run just `python3 train_models.py` if you set the `PYTHONPATH` environment variable
+to the `src` directory earlier or register the `src` as the source of modules in your IDE).
+
+The training process is tracked with MLFlow (one series -> one autoencoder training -> 
+one run in MLFlow). You can go to http://localhost:5000/ and see e.g. training time
+for each time series and loss function graphs.
+
+![mlflow screen 1](img/mlflow_screen_1.png)
+
+![mlflow_screen_2](img/mlflow_screen_2.png)
+
+#### Evaluate detectors
+
+In order to evaluate the detectors, run the `evaluation.ipynb` notebook.
+Open the Jupyter Lab environment:
+
+```bash
+PYTHONPATH=$(pwd)/src jupyter lab
+```
+
+and run the `evaluation.ipynb` notebook.
