@@ -1,5 +1,6 @@
 # Time-series-AD-with-TCN
-Time series subsequence anomaly detection with a TCN autoencoder
+Temporal Convolutional Network in the time series anomaly detection task -
+model implementation, experimental framework, experiment results.
 
 ### Dataset
 
