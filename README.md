@@ -4,6 +4,25 @@ model implementation, experimental framework, experiment results.
 
 ---
 
+## What is in this repository?
+
+This repository presents an anomaly detection in time series experiment using an autoencoder based on a
+TCN neural network. The task is **subsequence anomaly detection**, i.e. anomalies are some continuous
+fragments of series, not just single values on some single time steps. In this project,
+batch (offline) variant of detection is developed.
+
+In this repository, one can find
+
+- implementation of the anomaly detector, based on PyTorch, NumPy and SciPy
+- basic framework for time series anomaly detection experiments
+- evaluation results
+
+#### My `pytorch_tcn` fork
+
+My implementation makes use of the [pytorch-tcn](https://pypi.org/project/pytorch-tcn/) library.
+However, I have modified this library (added option to not use the padding) - see
+[my fork](https://github.com/Hubert1225/pytorch-tcn).
+
 ## What is TCN?
 
 Temporal Convolutional Network (TCN) is a variant of Convolutional Neural Network (CNN)
