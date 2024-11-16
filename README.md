@@ -70,7 +70,7 @@ VLDBJ (2021)
 
 We train a separate autoencoder instance for each time series.
 
-In the experiment, we assume that number of anomalies and the anomaly length are
+In the experiment, we assume that the number of anomalies and the anomaly length are
 known in a given series. We check whether the model is able to locate them correctly.
 
 For comparison purposes, we use two baseline methods:
@@ -81,7 +81,7 @@ data
 
 We use two evaluation metrics:
 
-- _precision@k_ - when the model return _k_ anomalies (anomalous subsequences),
+- _precision@k_ - when the model returns _k_ anomalies (anomalous subsequences),
 the _precision@k_ is the fraction of detected subsequences that are correct
 - _f1-score_ - f1-score metric computed for all points in the time series
 (we ignore the context of subsequence in this case)
@@ -199,8 +199,8 @@ Histograms of precision@k and f1-score per time series, for each method:
 
 ![histograms f1-score](img/f1_score.png)
 
-Results show, that the used benchmark dataset is an easy one in general - random
-detector often achieves non-zero results, LOF and TCN detectors typically detect all
+Results show that the used benchmark dataset is an easy one in general - random
+detector often achieves non-zero evaluation metrics, LOF and TCN detectors typically detect all
 anomalies. Both TCN and LOF perform significantly better than the random detector.
 However, we can see some differences in the LOF and TCN performance. TCN detector
 missed a few more anomalies in comparison to LOF, but its precision in locating
