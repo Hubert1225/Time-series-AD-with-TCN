@@ -17,7 +17,7 @@ In this repository, one can find
 - basic framework for time series anomaly detection experiments
 - evaluation results
 
-#### My `pytorch_tcn` fork
+#### My fork of `pytorch_tcn`
 
 My implementation makes use of the [pytorch-tcn](https://pypi.org/project/pytorch-tcn/) library.
 However, I have modified this library (added option to not use the padding) - see
