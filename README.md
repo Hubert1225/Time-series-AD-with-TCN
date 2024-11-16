@@ -40,6 +40,20 @@ additional connections between layers that are not direct neighbors
 In TCN, we usually use padding in each convolutional layer so that the size of the output
 is the same as the size of the input.
 
+## Architecture
+
+#### General architecture
+
+![general architecture](img/architecture.png)
+
+#### Encoder's architecture
+
+![encoder's architecture](img/Encoder.png)
+
+#### Decoder's architecture
+
+![decoder's architecture](img/Decoder.png)
+
 ## Dataset
 
 For the purpose of testing the anomaly detection model, synthetic
