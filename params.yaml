@@ -1,18 +1,18 @@
 params:
   tcn_ae:
-    random_seed: 0
-    n_epochs: 50
-    lr: 0.04
-    enc_channels: [2, 4]
-    hidden_dim: 8
-    dec_channels: [4, 2]
-    dilation_base: 2
-    kernel_size: 6
-    batch_size: 16
-    train_window_len: 2048
-    checkpoints_dir: "checkpoints/"
+    random_seed: 0  # random seed for reproducibility
+    n_epochs: 50  # number of epochs of training for each model
+    lr: 0.04  # learning rate
+    enc_channels: [2, 4]  # number of channels in consecutive encoder's layers
+    hidden_dim: 8  # number of channels of the latent representation
+    dec_channels: [4, 2]  # number of channels in consecutive decoder's layers
+    dilation_base: 2  # number used to calculate subsequent dilations (see docs in code)
+    kernel_size: 6  # kernel size
+    batch_size: 16  # batch size
+    train_window_len: 2048  # number of samples each training window will have
+    checkpoints_dir: "checkpoints/"  # path to save models
   baseline:
-    random_seed: 0
-    lof_n_neighbors: 50
-    lof_other_params:
+    random_seed: 0  # random seed for reproducibility
+    lof_n_neighbors: 50  # number of neighbors to use in the LOF algorithm
+    lof_other_params:  # other parameters values to pass to LOF (see scikit-learn docs)
       n_jobs: -1
