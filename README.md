@@ -11,7 +11,7 @@ TCN neural network architecture. The task is **subsequence anomaly detection**, 
 fragments of series, not just single values occurring on some single time steps. In this project,
 the batch (offline) variant of detection is assumed.
 
-In this repository, one can find
+In this repository, one can find:
 
 - implementation of the anomaly detector, based on PyTorch, NumPy and SciPy
 - basic framework for time series anomaly detection experiments
