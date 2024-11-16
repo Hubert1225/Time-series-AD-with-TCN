@@ -76,14 +76,14 @@ known in a given series. We check whether the model is able to locate them corre
 For comparison purposes, we use two baseline methods:
 
 - random detector - returns random subsequences
-- Local Outlier Factor - a well known anomaly detection method for multidimensional
+- Local Outlier Factor (LOF) - a well known anomaly detection method for multidimensional
 data
 
 We use two evaluation metrics:
 
 - _precision@k_ - when the model return _k_ anomalies (anomalous subsequences),
 the _precision@k_ is the fraction of detected subsequences that are correct
-- _f1-score_ - F1-score metric computed for all points in the time series
+- _f1-score_ - f1-score metric computed for all points in the time series
 (we ignore the context of subsequence in this case)
 
 ## How to run
@@ -171,3 +171,37 @@ PYTHONPATH=$(pwd)/src jupyter lab
 ```
 
 and run the `evaluation.ipynb` notebook.
+
+## Results
+
+**Mean precision@k per method for all time series**
+
+```
+Random    0.285595
+LOF       0.997619
+TCN AE    0.981548
+```
+
+**Mean f1-score per method for all time series**
+
+```
+Random    0.156837
+LOF       0.238023
+TCN AE    0.543618
+```
+
+If you want to see detailed results for each time series,
+please see the `evaluation.ipynb` notebook.
+
+Histograms of precision@k and f1-score per time series, for each method:
+
+![histograms precision@k](img/precision_at_k.png)
+
+![histograms f1-score](img/f1_score.png)
+
+Results show, that the used benchmark dataset is an easy one in general - random
+detector often achieves non-zero results, LOF and TCN detectors typically detect all
+anomalies. Both TCN and LOF perform significantly better than the random detector.
+However, we can see some differences in the LOF and TCN performance. TCN detector
+missed a few more anomalies in comparison to LOF, but its precision in locating
+anomalies was far better.
