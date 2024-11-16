@@ -66,6 +66,26 @@ P. Boniol, M. Linardi, F. Roncallo, T. Palpanas, M. Meftah, E. Remy,
 Unsupervised and Scalable Subsequence Anomaly Detection in Large Data Series,
 VLDBJ (2021)
 
+## Experiment details
+
+We train a separate autoencoder instance for each time series.
+
+In the experiment, we assume that number of anomalies and the anomaly length are
+known in a given series. We check whether the model is able to locate them correctly.
+
+For comparison purposes, we use two baseline methods:
+
+- random detector - returns random subsequences
+- Local Outlier Factor - a well known anomaly detection method for multidimensional
+data
+
+We use two evaluation metrics:
+
+- _precision@k_ - when the model return _k_ anomalies (anomalous subsequences),
+the _precision@k_ is the fraction of detected subsequences that are correct
+- _f1-score_ - F1-score metric computed for all points in the time series
+(we ignore the context of subsequence in this case)
+
 ## How to run
 
 First, you need to download data. Then, you need to train autoencoders
