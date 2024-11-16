@@ -29,7 +29,7 @@ Temporal Convolutional Network (TCN) is a variant of Convolutional Neural Networ
 with some enhancements introduced for processing time series (temporal) data. In comparison
 to the classical CNN, there are following differences:
 
-- **causal convolutions** - convolutions that take only past values to compute
+- **causal convolutions** - convolutions that take only past and present values to compute
 the value for the current moment; in the temporal context, it means that there is no
 leakage of information from the future
 - **dilation in convolutions** - in TCN, we use _dilated_ convolutions (kernel skips some values),
