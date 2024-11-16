@@ -33,7 +33,7 @@ to the classical CNN, there are following differences:
 the value for the current moment; in the temporal context, it means that there is no
 leakage of information from the future
 - **dilation in convolutions** - in TCN, we use _dilated_ convolutions (kernel skips some values),
-which significantly widen the network's perception field in a point of time
+which significantly widen the network's perception field
 - **skip connections** the structure of a TCN network is not purely linear, there are some
 additional connections between layers that are not direct neighbors
 
