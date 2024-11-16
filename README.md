@@ -6,8 +6,8 @@ model implementation, experimental framework, experiment results.
 
 ## What is in this repository?
 
-This repository presents an anomaly detection in time series experiment using an autoencoder based on a
-TCN neural network. The task is **subsequence anomaly detection**, i.e. anomalies are some continuous
+This repository presents an anomaly detection in time series experiment using an autoencoder based on the
+TCN neural network architecture. The task is **subsequence anomaly detection**, i.e. anomalies are some continuous
 fragments of series, not just single values on some single time steps. In this project,
 batch (offline) variant of detection is developed.
 
