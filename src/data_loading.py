@@ -76,6 +76,9 @@ def load_all_srw_series(
 
 
 class SlidingWindowDataset(Dataset):
+    """Dataset consisting of non-overlapping windows
+    from a given sequence
+    """
 
     def __init__(self, ts_values: np.ndarray, window_len: int):
         self.windows = nonoverlap_sliding_windows(ts_values, window_len)
