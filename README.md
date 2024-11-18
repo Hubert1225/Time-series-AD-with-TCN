@@ -200,8 +200,8 @@ Histograms of precision@k and f1-score per time series, for each method:
 ![histograms f1-score](img/f1_score.png)
 
 Results show that the used benchmark dataset is an easy one in general - random
-detector often achieves non-zero evaluation metrics, LOF and TCN detectors typically detect all
-anomalies. Both TCN and LOF perform significantly better than the random detector.
+detector often achieves non-zero evaluation metrics, and typically, all subsequences returned by
+LOF and TCN detectors are relevant. Both TCN and LOF perform significantly better than the random detector.
 However, we can see some differences in the LOF and TCN performance. TCN detector
-missed a few more anomalies in comparison to LOF, but its precision in locating
+made a few more incorrect detections in comparison to LOF, but its precision in locating
 anomalies was far better.
